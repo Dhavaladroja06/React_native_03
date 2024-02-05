@@ -1,63 +1,21 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View, Text, Pressable, ScrollView, ActivityIndicator } from 'react-native';
 import { SignUpStyle } from './Signup.style';
 import InputText from '../../components/InputText/InputText';
-import { useForm } from 'react-hook-form';
 import { Colors } from '../../constants/Color';
-import { NavigationProp, ParamListBase, useNavigation } from '@react-navigation/native';
-import { AIP_URL } from '../../components/api';
+import { useSignupLogic } from '../../hooks/useSignup';
 
-type Props = {
-    navigate(arg0: string): unknown;
-    navigations: NavigationProp<ParamListBase>
-}
+
 
 const Signup = () => {
-
-    const navigation: Props = useNavigation()
-    const [isLoading, setIsLoading] = useState(false);
-
-
     const {
         control,
         handleSubmit,
-        formState: { errors },
-        reset,
-        getValues
-    } = useForm()
-
-    const handleSignUp = async () => {
-        if (isLoading) return;
-        setIsLoading(true);
-        const formData = getValues();
-        console.log(formData);
-        try {
-            const response = await fetch(`${AIP_URL}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData),
-            });
-            if (response.ok) {
-                setTimeout(() => {
-                    navigation.navigate("Login");
-                }, 5000);
-            } else {
-                console.error('Failed to save user data');
-            }
-        } catch (error) {
-            console.error('Error occurred while saving user data:', error);
-        }
-        finally {
-            setTimeout(() => {
-                setIsLoading(false);
-                reset();
-            }, 5000);
-        }
-    };
-
-
+        errors,
+        isLoading,
+        handleSignUp,
+        handleLogin
+    } = useSignupLogic();
 
     return (
         <ScrollView style={SignUpStyle.Container}>
@@ -105,7 +63,7 @@ const Signup = () => {
                 error={errors.mobileNumber}
             />
             <InputText
-                label="PassWord"
+                label="Password"
                 icon="lock-closed-outline"
                 placeholder="Enter your password"
                 control={control}
@@ -121,12 +79,22 @@ const Signup = () => {
                 maxLength={8}
                 error={errors.password}
             />
-            <Pressable style={SignUpStyle.Button} onPress={handleSubmit(handleSignUp)} android_ripple={{ color: Colors.primary }}>
-                {isLoading ? <ActivityIndicator color={Colors.primary} size={24} /> : <Text style={SignUpStyle.ButtonText}>Sign up</Text>}
+            <Pressable
+                style={SignUpStyle.Button}
+                onPress={handleSubmit(handleSignUp)}
+                android_ripple={{ color: Colors.primary }}>
+                {isLoading ?
+                    <ActivityIndicator
+                        color={Colors.primary}
+                        size={24} /> :
+                    <Text style={SignUpStyle.ButtonText}>
+                        Sign up
+                    </Text>
+                }
             </Pressable>
             <View style={SignUpStyle.ButtomView}>
                 <Text style={SignUpStyle.AlreadyText}>Already have an account ?</Text>
-                <Pressable onPress={() => navigation.navigate("Login")}>
+                <Pressable onPress={handleLogin}>
                     <Text style={SignUpStyle.LoginText}>Login</Text>
                 </Pressable>
             </View>

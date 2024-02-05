@@ -13,6 +13,13 @@
       "mobileNumber": "4685976153",
       "password": "ssssssss",
       "id": 2
+    },
+    {
+      "UserName": "Dhaval",
+      "Email": "dhaval@gmail.com",
+      "mobileNumber": "8200357424",
+      "password": "qqqqqqqq",
+      "id": 3
     }
   ]
 }

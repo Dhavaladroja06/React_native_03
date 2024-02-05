@@ -1,21 +1,12 @@
 import React from 'react';
 import { View, Text, Image, Pressable } from 'react-native';
-import { NavigationProp, ParamListBase, useNavigation } from '@react-navigation/native';
 import { WelComeStyle } from './WelCome.style';
 import { Colors } from '../../constants/Color';
-
-type Props = {
-    navigate(arg0: string): unknown;
-    navigations: NavigationProp<ParamListBase>
-}
+import { useWelcomeLogic } from '../../hooks/useWelCome';
 
 const WelCome = () => {
 
-    const navigation:Props = useNavigation()
-
-    const handleJoinNow = () => {
-        navigation.navigate("Signup")
-    }
+    const {handleJoinNow, handleLogin} = useWelcomeLogic() 
 
     return (
         <View style={{ flex: 1 }}>
@@ -32,7 +23,7 @@ const WelCome = () => {
             </Pressable>
             <View style={WelComeStyle.ButtomView}>
                 <Text style={WelComeStyle.AlreadyText}>Already have an account ?</Text>
-                <Pressable onPress={() => navigation.navigate("Login")}>
+                <Pressable onPress={handleLogin}>
                     <Text style={WelComeStyle.LoginText}>Login</Text>
                 </Pressable>
             </View>
