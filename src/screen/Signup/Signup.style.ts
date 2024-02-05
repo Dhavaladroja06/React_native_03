@@ -41,5 +41,5 @@ export const SignUpStyle = StyleSheet.create({
         marginLeft: 5,
         fontWeight:"bold",
         color:Colors.primary
-    }
+    },
 })

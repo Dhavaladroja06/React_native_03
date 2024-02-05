@@ -23,6 +23,14 @@ export const WelComeStyle = StyleSheet.create({
         top: 130,
         left: 20,
     },
+    Slogan: {
+        fontSize: 16,
+        fontWeight: "500",
+        color: Colors.primary,
+        position: "absolute",
+        top: 170,
+        left: 20
+    },
     Button: {
         position: "absolute",
         bottom: 50,
@@ -40,21 +48,21 @@ export const WelComeStyle = StyleSheet.create({
         fontWeight: "bold",
         fontSize: 20
     },
-    ButtomView:{
-        position:"absolute",
+    ButtomView: {
+        position: "absolute",
         bottom: 15,
-        flexDirection:"row",
+        flexDirection: "row",
         padding: 10,
-        paddingLeft: 50,
+        left: 50
     },
-    AlreadyText:{
-        fontSize:16,
-        color:Colors.Black_color
+    AlreadyText: {
+        fontSize: 16,
+        color: Colors.Black_color,
     },
-    LoginText:{
+    LoginText: {
         fontSize: 16,
         marginLeft: 5,
-        fontWeight:"bold",
-        color:Colors.primary
+        fontWeight: "bold",
+        color: Colors.primary
     }
 })

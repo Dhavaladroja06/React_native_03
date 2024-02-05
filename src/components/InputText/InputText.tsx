@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, TextInput, Text, TouchableOpacity, KeyboardTypeOptions } from 'react-native';
-import { Controller, FieldError } from 'react-hook-form';
+import { Controller, FieldError, FieldErrorsImpl, Merge } from 'react-hook-form';
 import { Ionicons } from "@expo/vector-icons"
 import { InputTextStyle } from './InputText.style';
 import { Colors } from '../../constants/Color';
@@ -13,7 +13,8 @@ type InputTextProps = {
     control: any;
     name: string;
     rules: Object;
-    error?: FieldError | undefined;
+    // error?: FieldError | undefined;
+    error?: FieldError | Merge<FieldError, FieldErrorsImpl<any>> | undefined;
     keyboardType?: KeyboardTypeOptions | undefined;
     maxLength?: number;
     defaultValue?: string
@@ -77,7 +78,7 @@ const InputText = ({
                     </TouchableOpacity>
                 )}
             </View>
-            {error && <Text style={InputTextStyle.error}>{error.message}</Text>}
+            <Text style={InputTextStyle.error}>{error?.message ? error.message.toString() : ''}</Text>
         </View>
     );
 };

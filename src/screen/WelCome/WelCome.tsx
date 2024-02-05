@@ -1,13 +1,17 @@
 import React from 'react';
 import { View, Text, Image, Pressable } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { NavigationProp, ParamListBase, useNavigation } from '@react-navigation/native';
 import { WelComeStyle } from './WelCome.style';
 import { Colors } from '../../constants/Color';
 
+type Props = {
+    navigate(arg0: string): unknown;
+    navigations: NavigationProp<ParamListBase>
+}
 
 const WelCome = () => {
 
-    const navigation = useNavigation()
+    const navigation:Props = useNavigation()
 
     const handleJoinNow = () => {
         navigation.navigate("Signup")
@@ -18,6 +22,7 @@ const WelCome = () => {
             <Image source={require("../../../assets/6666912.jpg")} style={WelComeStyle.Image} />
             <Text style={WelComeStyle.welcomeText}>Welcome!</Text>
             <Text style={WelComeStyle.greed}>Let's Get Started</Text>
+            <Text style={WelComeStyle.Slogan}>"Shop smarter, not harder"</Text>
             <Pressable
                 style={WelComeStyle.Button}
                 onPress={handleJoinNow}
