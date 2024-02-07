@@ -4,21 +4,9 @@ import Swiper from 'react-native-swiper';
 import { ProductDetailsstyle } from './productDetails.style';
 import { Ionicons } from "@expo/vector-icons"
 import { Colors } from '../../constants/Color';
+import { ProductProps } from '../../hooks/useHome';
 
-type ProductProps = {
-    params: { product: ProductProps; };
-    id: number;
-    title?: string;
-    description?: string;
-    price?: number;
-    discountPercentage?: number;
-    rating?: number;
-    stock?: number;
-    brand?: string;
-    category?: string;
-    thumbnail?: string;
-    images?: string[];
-}
+
 type StarProps = {
     filled?: boolean;
 }
