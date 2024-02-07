@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { NavigationProp, ParamListBase, useNavigation } from '@react-navigation/native';
-import { AIP_URL } from '../components/api';
+import { AIP_URL } from '../api';
 
 
 type Props = {

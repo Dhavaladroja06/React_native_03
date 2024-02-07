@@ -3,7 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Alert, DeviceEventEmitter } from 'react-native';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useNavigation, NavigationProp, ParamListBase } from '@react-navigation/native';
-import { AIP_URL } from '../components/api';
+import { AIP_URL } from '../api';
 
 export type UserData = {
     Email: string;
