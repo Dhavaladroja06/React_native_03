@@ -11,5 +11,6 @@ export const Colors = {
     price_color:"#008000",
     star_color: "#efa31d",
     mrp_color: "#6a6767",
-    ripple_color:"#e2d84aff"
+    ripple_color:"#e2d84aff",
+    Quantity_color: "#d7d7d79d"
 }   

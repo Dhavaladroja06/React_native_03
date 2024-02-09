@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Alert, DeviceEventEmitter } from 'react-native';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { useNavigation, NavigationProp, ParamListBase } from '@react-navigation/native';
 import { AIP_URL } from '../api';
 
 export type UserData = {
@@ -10,16 +9,11 @@ export type UserData = {
     password: string;
 }
 
-type Props = {
-    navigate(arg0: string): unknown;
-    navigations: NavigationProp<ParamListBase>
-}
 
 export const useLoginLogic = () => {
-    const navigation: Props = useNavigation();
     const [isLoading, setIsLoading] = useState(false);
     const [userData, setUserData] = useState<UserData[] | null>(null);
-    const { control, handleSubmit, formState: { errors }, reset, getValues } = useForm();
+    const { control, handleSubmit, formState: { errors }, reset } = useForm();
 
     const fetchUserData = async () => {
         try {
@@ -50,8 +44,9 @@ export const useLoginLogic = () => {
                 if (user) {
                     setTimeout(async () => {
                         await AsyncStorage.setItem('isLoggedIn', 'true');
+                        await AsyncStorage.setItem('loggedInUserData', JSON.stringify(user));
                         DeviceEventEmitter.emit("loginSuccess")
-                    }, 5000);
+                    }, 2500);
                 } else {
                     Alert.alert('Invalid credentials', 'Please enter valid email and password.');
                 }
@@ -65,7 +60,7 @@ export const useLoginLogic = () => {
             setTimeout(() => {
                 setIsLoading(false);
                 reset();
-            }, 5000);
+            }, 2500);
         }
     };
 

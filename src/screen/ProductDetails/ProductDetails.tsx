@@ -1,30 +1,29 @@
 import React from 'react';
-import { View, Text, Image, ScrollView, Pressable } from 'react-native';
+import { View, Text, Image, Pressable, ActivityIndicator } from 'react-native';
 import Swiper from 'react-native-swiper';
 import { ProductDetailsstyle } from './productDetails.style';
 import { Ionicons } from "@expo/vector-icons"
 import { Colors } from '../../constants/Color';
 import { ProductProps } from '../../hooks/useHome';
-
+import useProductDetailsLogic from '../../hooks/useProductDetails';
 
 type StarProps = {
     filled?: boolean;
 }
 
-
 const Star = ({ filled }: StarProps) => (
     <Ionicons name={filled ? "star" : "star-outline"} size={20} color={Colors.star_color} />
 );
 
-const ProductDetails =({ route }: { route?: { params: { product: ProductProps } } }) => {
+const ProductDetails = ({ route }: { route: { params: { product: ProductProps } } }) => {
+    const { isLoading, addToCart } = useProductDetailsLogic({ product: route?.params?.product });
 
-    if (!route || !route.params) {
-        return null; 
+
+    if (!route || !route.params || !route.params.product) {
+        return null;
     }
 
-
     const { product } = route.params;
-
 
     const renderStars = (rating: number | undefined) => {
         if (rating === undefined) {
@@ -50,7 +49,6 @@ const ProductDetails =({ route }: { route?: { params: { product: ProductProps } 
 
     const discountedPrice = product.price ? product.price - (product.price * (product.discountPercentage || 0) / 100) : undefined;
 
-
     return (
         <View style={ProductDetailsstyle.container}>
             <Swiper>
@@ -63,7 +61,7 @@ const ProductDetails =({ route }: { route?: { params: { product: ProductProps } 
             <View>
                 <View style={ProductDetailsstyle.brandView}>
                     <Text style={ProductDetailsstyle.brand}>Brand: {product.brand}</Text>
-                    <View style={{ flexDirection: 'row' }}>
+                    <View style={ProductDetailsstyle.rating}>
                         <Text>{product.rating} </Text>
                         {renderStars(product.rating)}
                     </View>
@@ -85,8 +83,16 @@ const ProductDetails =({ route }: { route?: { params: { product: ProductProps } 
                         {product.stock}
                     </Text> stock is available
                 </Text>
-                <Pressable style={ProductDetailsstyle.buttton} android_ripple={{ color: Colors.ripple_color }}>
-                    <Text style={ProductDetailsstyle.buttonText}>Add To Cart</Text>
+                <Pressable
+                    style={ProductDetailsstyle.buttton}
+                    android_ripple={{ color: Colors.ripple_color }}
+                    onPress={addToCart}
+                >
+                    {isLoading ? (
+                        <ActivityIndicator color={Colors.white_color} size={20} />
+                    ) : (
+                        <Text style={ProductDetailsstyle.buttonText}>Add To Cart</Text>
+                    )}
                 </Pressable>
             </View>
         </View>

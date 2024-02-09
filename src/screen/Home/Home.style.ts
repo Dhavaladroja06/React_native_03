@@ -4,8 +4,6 @@ import { Colors } from "../../constants/Color";
 export const HomeStyle = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: Colors.ProductScreen_color,
-        paddingHorizontal: 2
     },
     loader: {
         flex: 1,
@@ -13,13 +11,15 @@ export const HomeStyle = StyleSheet.create({
         alignItems: "center"
     },
     Maincontainer: {
+        flex:1,
         backgroundColor: Colors.white_color,
         padding: 10,
         marginHorizontal: 5,
         marginBottom: 5,
         borderRadius: 10,
         height: 165,
-        width: 169,
+        width:169,
+        // width:"100%",
         elevation: 10,
         shadowColor: Colors.Black_color,
         shadowRadius: 5,
@@ -63,4 +63,9 @@ export const HomeStyle = StyleSheet.create({
         paddingHorizontal: 10,
         margin: 10,
     },
+    flatlist:{ 
+        justifyContent:"space-between",
+        alignItems:"center",
+        flex:1,
+     }
 })

@@ -37,7 +37,7 @@ export const useSignupLogic = () => {
             if (response.ok) {
                 setTimeout(() => {
                     navigation.navigate("Login");
-                }, 5000);
+                }, 2500);
             } else {
                 console.error('Failed to save user data');
             }
@@ -48,7 +48,7 @@ export const useSignupLogic = () => {
             setTimeout(() => {
                 setIsLoading(false);
                 reset();
-            }, 5000);
+            }, 2500);
         }
     };
 

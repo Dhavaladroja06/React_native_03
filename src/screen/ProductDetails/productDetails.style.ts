@@ -28,6 +28,10 @@ export const ProductDetailsstyle = StyleSheet.create({
         fontSize: 14,
         color: Colors.primary
     },
+    rating:{
+        flexDirection:"row",
+        marginTop: 3
+    },
     title: {
         fontSize: 20,
         fontWeight: "900",

@@ -1,6 +1,7 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { Product_API } from "../api";
+
 
 export const fetchProduct = async() => {
     const response = await axios.get(`${Product_API}`)
@@ -13,3 +14,4 @@ export const useProductApi = () => {
         queryFn: fetchProduct
     })
 }
+

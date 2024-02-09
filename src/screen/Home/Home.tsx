@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, FlatList, ActivityIndicator, Image, TextInput, Pressable } from 'react-native';
 import { Colors } from '../../constants/Color';
 import { HomeStyle } from './Home.style';
-import useProductLogic, {ProductProps} from '../../hooks/useHome';
+import useProductLogic, { ProductProps } from '../../hooks/useHome';
 
 
 const Home = () => {
@@ -39,12 +39,14 @@ const Home = () => {
                 placeholder="🔍 Search Products..."
                 onChangeText={handleSearch}
             />
-            <FlatList
-                data={products}
-                renderItem={renderItem}
-                keyExtractor={(item) => item.id.toString()}
-                numColumns={2}
-            />
+            <View style={HomeStyle.flatlist}>
+                <FlatList
+                    data={products}
+                    renderItem={renderItem}
+                    keyExtractor={(item) => item.id.toString()}
+                    numColumns={2}
+                />
+            </View>
         </View>
     );
 }

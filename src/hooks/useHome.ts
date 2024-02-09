@@ -3,6 +3,7 @@ import { NavigationProp, ParamListBase, useNavigation } from '@react-navigation/
 import { useProductApi } from '../Query/ProductQurery';
 
 export type ProductProps = {
+    quantity: number;
     params: { product: any; };
     id: number;
     title?: string;
