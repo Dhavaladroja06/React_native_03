@@ -11,14 +11,14 @@ export const CartStyle = StyleSheet.create({
         flexDirection: "row",
         marginTop: 2,
         backgroundColor: Colors.white_color,
-        elevation: 10,
+        elevation: 5,
         padding: 10
     },
     Image: {
         height: 200,
         width: 150,
         resizeMode: "stretch",
-        marginRight: 10
+        marginRight: 10,
     },
     Details: {
         flex: 1,
@@ -67,7 +67,7 @@ export const CartStyle = StyleSheet.create({
         width: "45%",
         borderWidth: 1,
         borderRadius: 3,
-        marginTop: 7
+        marginTop: 7,
     },
     QuantityButtons: {
         borderWidth: 1,
@@ -97,7 +97,7 @@ export const CartStyle = StyleSheet.create({
         marginLeft: 10,
         marginTop: 7,
         borderRadius: 3,
-        backgroundColor: Colors.Quantity_color
+        backgroundColor: Colors.Quantity_color,
     },
     BuyButton: {
         width: "100%",
@@ -106,11 +106,112 @@ export const CartStyle = StyleSheet.create({
         borderRadius: 10,
         alignItems: "center",
         justifyContent: "center",
-        marginBottom:6
+        marginBottom: 6,
+        elevation: 10
     },
     BuyButtonText: {
         fontSize: 16,
         fontWeight: "500",
         color: Colors.white_color
-    }
+    },
+    MapDoneButton: {
+        position: 'absolute',
+        bottom: 20,
+        left: 20,
+        backgroundColor: Colors.primary,
+        paddingVertical: 12,
+        paddingHorizontal: 20,
+        borderRadius: 5,
+    },
+    MapDoneButtonText: {
+        color: Colors.white_color,
+        fontSize: 16,
+        fontWeight: 'bold',
+    },
+    addressContainer: {
+        backgroundColor: Colors.white_color,
+        padding: 10,
+        marginTop: 10,
+        borderRadius: 5,
+        borderWidth: 1,
+        borderColor: Colors.gray_color,
+    },
+    addressText: {
+        fontSize: 16,
+        color: Colors.Black_color,
+    },
+    billContainer: {
+        flex: 1,
+        padding: 20,
+        backgroundColor: Colors.white_color,
+    },
+    billHeader: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginBottom: 10,
+    },
+    billHeaderText: {
+        fontWeight: 'bold',
+        flex: 1,
+        textAlign: 'center',
+    },
+
+    billItem: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginBottom: 5,
+    },
+    billTotal: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginTop: 10,
+        borderTopWidth: 1,
+        paddingTop: 10,
+    },
+    totallable:{
+        fontSize: 18,
+        fontWeight:"700",
+    },
+    closeButton: {
+        alignSelf: 'center',
+        marginTop: 20,
+        paddingVertical: 10,
+        paddingHorizontal: 20,
+        backgroundColor: Colors.gray_color,
+        borderRadius: 5,
+        width:"45%"
+    },
+    closeButtonText: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        textAlign:"center"
+    },
+    billItemTitle: {
+        width: "20%",
+        textAlign: "left",
+        fontWeight:"500"
+    },
+    billItemtext:{
+        width:"20%",
+        textAlign:"center",
+    },
+    modlebutton:{
+        flexDirection:"row",
+        justifyContent:"space-between"
+    },
+    modleBuyButton: {
+        alignSelf: 'center',
+        marginTop: 20,
+        paddingVertical: 10,
+        paddingHorizontal: 20,
+        backgroundColor: Colors.star_color,
+        borderRadius: 5,
+        width:"45%"
+    },
+    modlebuyButtonText: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        textAlign:"center",
+        color:Colors.white_color
+    },
 })

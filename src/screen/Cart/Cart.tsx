@@ -1,155 +1,39 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, Image, Pressable, RefreshControl, Alert  } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { AIP_URL } from '../../api';
+import React from 'react';
+import { View, Text, FlatList, Image, Pressable, RefreshControl, Modal } from 'react-native';
 import { ProductProps } from '../../hooks/useHome';
 import { CartStyle } from './Cart.style';
-import { Ionicons } from "@expo/vector-icons"
 import { Colors } from '../../constants/Color';
+import { Ionicons } from "@expo/vector-icons";
+import useCart from '../../hooks/useCart';
+import MapView, { Marker } from 'react-native-maps';
 
 const Cart = () => {
-    const [cartProducts, setCartProducts] = useState<ProductProps[]>([]);
-    const [refreshing, setRefreshing] = useState(false);
+    const {
+        cartProducts,
+        refreshing,
+        showMapModal,
+        selectedLocation,
+        selectedAddress,
+        showBillModal,
+        totalBill,
+        fetchCartData,
+        updateQuantity,
+        incrementQuantity,
+        decrementQuantity,
+        removeProduct,
+        handleProceedToBuy,
+        handleMapPress,
+        handleMapDone,
+        getLocationAddress,
+        handleBuyNow,
+        handlebillclose
+    } = useCart();
 
-
-    useEffect(() => {
-        fetchCartData();
-    }, []);
-
-    const fetchCartData = async () => {
-        try {
-            setRefreshing(true);
-            const userData = await AsyncStorage.getItem('loggedInUserData');
-            if (!userData) {
-                return;
-            }
-            const { id } = JSON.parse(userData);
-            const response = await fetch(`${AIP_URL}/${id}`);
-            const userDataFromServer = await response.json();
-            const userCart = userDataFromServer.cart || [];
-            setCartProducts(userCart);
-        } catch (error) {
-            console.error('Error fetching cart data:', error);
-        } finally {
-            setRefreshing(false);
-        }
-    };
-
-    const onRefresh = () => {
-        fetchCartData();
-    };
-
-    const updateQuantity = async (productId: number, newQuantity: number) => {
-        try {
-            const userData = await AsyncStorage.getItem('loggedInUserData');
-            if (!userData) {
-                return;
-            }
-
-            const { id } = JSON.parse(userData);
-            const response = await fetch(`${AIP_URL}/${id}`);
-            const userDataFromServer = await response.json();
-            const userCart = userDataFromServer.cart || [];
-            const updatedUserCart = userCart.map((product: { id: number; }) =>
-                product.id === productId ? { ...product, quantity: newQuantity } : product
-            );
-            await fetch(`${AIP_URL}/${id}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ ...userDataFromServer, cart: updatedUserCart }),
-            });
-            setCartProducts(prevCartProducts =>
-                prevCartProducts.map(product =>
-                    product.id === productId ? { ...product, quantity: newQuantity } : product
-                )
-            );
-        } catch (error) {
-            console.error('Error updating quantity and cart data on the server:', error);
-        }
-    };
-
-    const incrementQuantity = async (productId: number) => {
-        try {
-            const product = cartProducts.find(product => product.id === productId);
-            if (!product) {
-                return;
-            }
-            const newQuantity = product.quantity + 1;
-
-            await updateQuantity(productId, newQuantity);
-        } catch (error) {
-            console.error('Error incrementing quantity:', error);
-        }
-    };
-
-    const decrementQuantity = async (productId: number) => {
-        try {
-            const product = cartProducts.find(product => product.id === productId);
-            if (!product || product.quantity <= 1) {
-                return;
-            }
-            const newQuantity = product.quantity - 1;
-            await updateQuantity(productId, newQuantity);
-        } catch (error) {
-            console.error('Error decrementing quantity:', error);
-        }
-    };
-
-
-    const removeProduct = async (productId: number) => {
-        try {
-            const userData = await AsyncStorage.getItem('loggedInUserData');
-            if (!userData) {
-                return;
-            }
-
-            const { id } = JSON.parse(userData);
-            const response = await fetch(`${AIP_URL}/${id}`);
-            const userDataFromServer = await response.json();
-            const userCart = userDataFromServer.cart || [];
-            const updatedUserCart = userCart.filter((product: { id: number; }) =>
-                product.id !== productId
-            );
-
-            Alert.alert(
-                "Confirm Deletion",
-                "Are you sure you want to delete this product?",
-                [
-                    {
-                        text: "Cancel",
-                        style: "cancel"
-                    },
-                    {
-                        text: "Delete",
-                        onPress: async () => {
-                            await fetch(`${AIP_URL}/${id}`, {
-                                method: 'PUT',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                },
-                                body: JSON.stringify({ ...userDataFromServer, cart: updatedUserCart }),
-                            });
-                            setCartProducts(updatedUserCart);
-                        }
-                    }
-                ]
-            );
-
-        } catch (error) {
-            console.error('Error removing product from cart:', error);
-        }
-    };
-
-
-    const renderCartProducter = ({ item }: { item: ProductProps }) => {
-
+    const renderCartProduct = ({ item }: { item: ProductProps }) => {
         const price = item.price ?? 0;
         const discountPercentage = item.discountPercentage ?? 0;
         const discountedPrice = price - (price * discountPercentage) / 100;
         const discountedPriceFormatted = discountedPrice.toFixed(2);
-
 
         return (
             <View style={CartStyle.MainContainer}>
@@ -188,29 +72,65 @@ const Cart = () => {
                     </View>
                 </View>
             </View>
-        )
-    }
+        );
+    };
 
     return (
         <View style={CartStyle.container}>
-            {cartProducts.length > 0 ? (
-                <FlatList
-                    data={cartProducts}
-                    keyExtractor={(item) => item.id.toString()}
-                    renderItem={renderCartProducter}
-                    refreshControl={
-                        <RefreshControl
-                            refreshing={refreshing}
-                            onRefresh={onRefresh}
-                        />
-                    }
-                />
-            ) : (
-                <Text>Your cart is empty.</Text>
+            <FlatList
+                data={cartProducts}
+                renderItem={renderCartProduct}
+                keyExtractor={(item) => item.id.toString()}
+                refreshControl={<RefreshControl refreshing={refreshing} onRefresh={fetchCartData} />}
+            />
+
+            {cartProducts.length > 0 && (
+                <Pressable style={CartStyle.BuyButton} onPress={handleProceedToBuy} android_ripple={{ color: Colors.ripple_color }}>
+                    <Text style={CartStyle.BuyButtonText}>Proceed to Buy</Text>
+                </Pressable>
             )}
-            <Pressable style={CartStyle.BuyButton} android_ripple={{ color:Colors.ripple_color }}>
-                <Text style={CartStyle.BuyButtonText}>Proceed to Buy</Text>
-            </Pressable>
+
+            <Modal visible={showMapModal} animationType="slide">
+                <MapView style={{ flex: 1 }} onPress={handleMapPress}>
+                    {selectedLocation && <Marker coordinate={selectedLocation} />}
+                </MapView>
+                <Pressable onPress={handleMapDone} style={CartStyle.MapDoneButton}>
+                    <Text style={CartStyle.MapDoneButtonText}>Done</Text>
+                </Pressable>
+            </Modal>
+
+            <Modal visible={showBillModal} animationType="fade">
+                <View style={CartStyle.billContainer}>
+                    <View style={CartStyle.billHeader}>
+                        <Text style={CartStyle.billHeaderText}>Title</Text>
+                        <Text style={CartStyle.billHeaderText}>Quantity</Text>
+                        <Text style={CartStyle.billHeaderText}>Price</Text>
+                        <Text style={CartStyle.billHeaderText}>Discount(%)</Text>
+                        <Text style={CartStyle.billHeaderText}>Discounted Price</Text>
+                    </View>
+                    {cartProducts.map((product) => (
+                        <View key={product.id} style={CartStyle.billItem}>
+                            <Text style={CartStyle.billItemTitle}>{product.title}</Text>
+                            <Text style={CartStyle.billItemtext}>{product.quantity}</Text>
+                            <Text style={CartStyle.billItemtext}>${product.price?.toFixed(2) ?? 0}</Text>
+                            <Text style={CartStyle.billItemtext}>{product.discountPercentage}%</Text>
+                            <Text style={CartStyle.billItemtext}>${(product.price ? (product.price - (product.discountPercentage ?? 0) / 100) * product.quantity : 0).toFixed(2)}</Text>
+                        </View>
+                    ))}
+                    <View style={CartStyle.billTotal}>
+                        <Text style={CartStyle.totallable}>Total:</Text>
+                        <Text style={CartStyle.totallable}>${totalBill.toFixed(2)}</Text>
+                    </View>
+                    <View style={CartStyle.modlebutton} >
+                        <Pressable style={CartStyle.modleBuyButton} onPress={handleBuyNow} android_ripple={{ color: Colors.ripple_color }}>
+                            <Text style={CartStyle.closeButtonText}>BuyNow</Text>
+                        </Pressable>
+                        <Pressable style={CartStyle.closeButton} onPress={handlebillclose}>
+                            <Text style={CartStyle.closeButtonText}>Close</Text>
+                        </Pressable>
+                    </View>
+                </View>
+            </Modal>
         </View>
     );
 };
