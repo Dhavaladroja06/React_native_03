@@ -15,6 +15,8 @@ const useCart = () => {
     const [selectedAddress, setSelectedAddress] = useState<string>("");
     const [showBillModal, setShowBillModal] = useState(false);
     const [totalBill, setTotalBill] = useState<number>(0);
+    const [isLoading, setIsLoading] = useState(false);
+    const [totalCount, setTotalCount] = useState<number>(0);
 
     useEffect(() => {
         fetchCartData();
@@ -33,6 +35,7 @@ const useCart = () => {
         }, 0);
         setTotalBill(total);
     };
+
 
     const fetchCartData = async () => {
         try {
@@ -156,6 +159,7 @@ const useCart = () => {
     };
 
     const handleProceedToBuy = async () => {
+        setIsLoading(true)
         const userData = await AsyncStorage.getItem('loggedInUserData');
         if (!userData) {
             return;
@@ -166,9 +170,11 @@ const useCart = () => {
         const userDataFromServer = await response.json();
 
         if (userDataFromServer.address) {
+            setIsLoading(false)
             setShowBillModal(true);
             return;
         }
+        setIsLoading(false)
         setShowMapModal(true);
     };
 
@@ -225,7 +231,8 @@ const useCart = () => {
         try {
             const date = new Date();
             const order = {
-                dateTime: date.toISOString(),
+                date: date.toDateString(),
+                time: date.toLocaleTimeString(),
                 products: cartProducts
             };
 
@@ -255,6 +262,16 @@ const useCart = () => {
     const handlebillclose = () => {
         setShowBillModal(false)
     }
+    
+    useEffect(() => {
+        calculateTotalCount(); // Recalculate total count whenever cartProducts changes
+    }, [cartProducts]);
+
+    const calculateTotalCount = () => {
+        const count = cartProducts.reduce((acc, product) => acc + product.quantity, 0);
+        setTotalCount(count);
+    };
+
 
     return {
         cartProducts,
@@ -274,7 +291,9 @@ const useCart = () => {
         handleMapDone,
         getLocationAddress,
         handleBuyNow,
-        handlebillclose
+        handlebillclose,
+        isLoading,
+        totalCount
     };
 };
 

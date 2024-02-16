@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, Text, FlatList, Image, Pressable, RefreshControl, Modal } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, FlatList, Image, Pressable, RefreshControl, Modal, ActivityIndicator, Animated  } from 'react-native';
 import { ProductProps } from '../../hooks/useHome';
 import { CartStyle } from './Cart.style';
 import { Colors } from '../../constants/Color';
@@ -26,10 +26,41 @@ const Cart = () => {
         handleMapDone,
         getLocationAddress,
         handleBuyNow,
-        handlebillclose
+        handlebillclose,
+        isLoading,
     } = useCart();
 
+
+    const [successMessageOpacity] = useState(new Animated.Value(0));
+
+    useEffect(() => {
+        if (showBillModal) {
+            showSuccessMessage();
+        }
+    }, [showBillModal]);
+
+    const showSuccessMessage = () => {
+        Animated.timing(successMessageOpacity, {
+            toValue: 1,
+            duration: 1000,
+            useNativeDriver: true,
+        }).start(() => {
+            setTimeout(() => {
+                hideSuccessMessage();
+            }, 3000);
+        });
+    };
+
+    const hideSuccessMessage = () => {
+        Animated.timing(successMessageOpacity, {
+            toValue: 0,
+            duration: 1000,
+            useNativeDriver: true,
+        }).start();
+    };
+
     const renderCartProduct = ({ item }: { item: ProductProps }) => {
+
         const price = item.price ?? 0;
         const discountPercentage = item.discountPercentage ?? 0;
         const discountedPrice = price - (price * discountPercentage) / 100;
@@ -86,7 +117,11 @@ const Cart = () => {
 
             {cartProducts.length > 0 && (
                 <Pressable style={CartStyle.BuyButton} onPress={handleProceedToBuy} android_ripple={{ color: Colors.ripple_color }}>
-                    <Text style={CartStyle.BuyButtonText}>Proceed to Buy</Text>
+                    {isLoading ? (
+                        <ActivityIndicator color={Colors.white_color} size={20} />
+                    ) : (
+                        <Text style={CartStyle.BuyButtonText}>Proceed to Buy</Text>
+                    )}
                 </Pressable>
             )}
 
@@ -101,20 +136,19 @@ const Cart = () => {
 
             <Modal visible={showBillModal} animationType="fade">
                 <View style={CartStyle.billContainer}>
+                    <Text style={CartStyle.Billtitle}>Total Bill</Text>
                     <View style={CartStyle.billHeader}>
                         <Text style={CartStyle.billHeaderText}>Title</Text>
                         <Text style={CartStyle.billHeaderText}>Quantity</Text>
+                        <Text style={CartStyle.billHeaderText}>Discount  (%)</Text>
                         <Text style={CartStyle.billHeaderText}>Price</Text>
-                        <Text style={CartStyle.billHeaderText}>Discount(%)</Text>
-                        <Text style={CartStyle.billHeaderText}>Discounted Price</Text>
                     </View>
                     {cartProducts.map((product) => (
                         <View key={product.id} style={CartStyle.billItem}>
                             <Text style={CartStyle.billItemTitle}>{product.title}</Text>
                             <Text style={CartStyle.billItemtext}>{product.quantity}</Text>
-                            <Text style={CartStyle.billItemtext}>${product.price?.toFixed(2) ?? 0}</Text>
                             <Text style={CartStyle.billItemtext}>{product.discountPercentage}%</Text>
-                            <Text style={CartStyle.billItemtext}>${(product.price ? (product.price - (product.discountPercentage ?? 0) / 100) * product.quantity : 0).toFixed(2)}</Text>
+                            <Text style={CartStyle.billItemtext}>${product.price ? (product.price * product.quantity) .toFixed(2) : 0}</Text>
                         </View>
                     ))}
                     <View style={CartStyle.billTotal}>
@@ -131,6 +165,9 @@ const Cart = () => {
                     </View>
                 </View>
             </Modal>
+            <Animated.View style={[CartStyle.successMessage, { opacity: successMessageOpacity }]}>
+                <Text style={CartStyle.successMessageText}>Purchase Successful!</Text>
+            </Animated.View>
         </View>
     );
 };

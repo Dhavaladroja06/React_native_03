@@ -1,6 +1,6 @@
 import { useQuery, useMutation } from "@tanstack/react-query";
 import axios from "axios";
-import { Product_API } from "../api";
+import { AIP_URL, Product_API } from "../api";
 
 
 export const fetchProduct = async() => {

@@ -6,6 +6,7 @@ import { Ionicons } from "@expo/vector-icons"
 import { Colors } from '../../constants/Color';
 import { ProductProps } from '../../hooks/useHome';
 import useProductDetailsLogic from '../../hooks/useProductDetails';
+import { RouteProp, useRoute } from '@react-navigation/native'; 
 
 type StarProps = {
     filled?: boolean;
@@ -15,15 +16,22 @@ const Star = ({ filled }: StarProps) => (
     <Ionicons name={filled ? "star" : "star-outline"} size={20} color={Colors.star_color} />
 );
 
-const ProductDetails = ({ route }: { route: { params: { product: ProductProps } } }) => {
-    const { isLoading, addToCart } = useProductDetailsLogic({ product: route?.params?.product });
+type RootStackParamList = {
+    ProductDetails: { product: ProductProps };
+};
 
+type ProductDetailsRouteProp = RouteProp<RootStackParamList, 'ProductDetails'>;
+
+const ProductDetails: React.FC = () => {
+    const route = useRoute<ProductDetailsRouteProp>(); // Use useRoute with specific RouteProp type
+    const { isLoading, addToCart } = useProductDetailsLogic({ product: route.params.product });
 
     if (!route || !route.params || !route.params.product) {
         return null;
     }
 
     const { product } = route.params;
+
 
     const renderStars = (rating: number | undefined) => {
         if (rating === undefined) {
@@ -52,7 +60,7 @@ const ProductDetails = ({ route }: { route: { params: { product: ProductProps } 
     return (
         <View style={ProductDetailsstyle.container}>
             <Swiper>
-                {product.images && product.images.map((image, index) => (
+                {product.images && product.images.map((image: string, index: React.Key | null | undefined) => (
                     <View key={index} style={ProductDetailsstyle.ImageContainer} >
                         <Image source={{ uri: image }} style={ProductDetailsstyle.image} />
                     </View>

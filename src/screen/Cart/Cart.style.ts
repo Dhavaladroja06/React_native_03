@@ -214,4 +214,26 @@ export const CartStyle = StyleSheet.create({
         textAlign:"center",
         color:Colors.white_color
     },
+    Billtitle:{
+        fontSize: 20,
+        fontWeight:"800",
+        textAlign:"center",
+        borderBottomWidth: 2,
+        marginBottom: 5
+    },
+    successMessage: {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: [{ translateX: -100 }, { translateY: -100 }],
+        backgroundColor: Colors.successBackground,
+        padding: 10,
+        borderRadius: 5,
+        elevation: 5,
+      },
+      successMessageText: {
+        color: Colors.successText,
+        fontSize: 16,
+        fontWeight: 'bold',
+      },
 })
