@@ -9,8 +9,8 @@ const WelCome = () => {
     const {handleJoinNow, handleLogin} = useWelcomeLogic() 
 
     return (
-        <View style={{ flex: 1 }}>
-            <Image source={require("../../../assets/6666912.jpg")} style={WelComeStyle.Image} />
+        <View style={WelComeStyle.Container}>
+            <Image source={require("../../../assets/6666912.png")} style={WelComeStyle.Image} />
             <Text style={WelComeStyle.welcomeText}>Welcome!</Text>
             <Text style={WelComeStyle.greed}>Let's Get Started</Text>
             <Text style={WelComeStyle.Slogan}>"Shop smarter, not harder"</Text>

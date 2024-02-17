@@ -5,7 +5,15 @@ import InputText from '../../components/InputText/InputText';
 import { Colors } from '../../constants/Color';
 import { useLoginLogic } from '../../hooks/useLogin';
 const Login = () => {
-    const { control, handleSubmit, errors, handleLogin, isLoading } = useLoginLogic();
+
+    const { 
+        control, 
+        handleSubmit, 
+        errors, 
+        handleLogin, 
+        isLoading,
+        handleSignUp 
+    } = useLoginLogic();
 
     return (
         <ScrollView style={LoginStyle.Container}>
@@ -43,6 +51,7 @@ const Login = () => {
                 maxLength={8}
                 error={errors.password}
             />
+            
             <Pressable
                 style={LoginStyle.Button}
                 android_ripple={{ color: Colors.primary }}
@@ -54,9 +63,11 @@ const Login = () => {
                     <Text style={LoginStyle.ButtonText}>Log in</Text>
                 )}
             </Pressable>
+
+
             <View style={LoginStyle.ButtomView}>
                 <Text style={LoginStyle.AlreadyText}>Don't have an account ?</Text>
-                <Pressable onPress={handleLogin}>
+                <Pressable onPress={handleSignUp}>
                     <Text style={LoginStyle.LoginText}>SignUp</Text>
                 </Pressable>
             </View>

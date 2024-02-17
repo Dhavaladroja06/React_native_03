@@ -2,10 +2,17 @@ import { StyleSheet } from "react-native"
 import { Colors } from "../../constants/Color"
 
 export const WelComeStyle = StyleSheet.create({
+
+    Container: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: Colors.white_color
+    },
+
     Image: {
         width: "100%",
-        height: "100%",
-        resizeMode: "cover",
+        height: "40%",
     },
     welcomeText: {
         fontSize: 34,

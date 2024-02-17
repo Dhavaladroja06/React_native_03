@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useEffect, useState } from 'react';
-import { View, Text, RefreshControl, FlatList } from 'react-native'; 
+import { View, Text, RefreshControl, FlatList } from 'react-native';
 import { AIP_URL } from '../../api';
 import { ProductProps } from '../../hooks/useHome';
 import { OrderStyle } from './Myorders.style';
@@ -13,7 +13,7 @@ type Order = {
 
 const Myorders = () => {
     const [orderedProducts, setOrderedProducts] = useState<Order[]>([]);
-    const [refreshing, setRefreshing] = useState(false); 
+    const [refreshing, setRefreshing] = useState(false);
 
 
     const fetchOrderedProducts = async () => {
@@ -35,10 +35,10 @@ const Myorders = () => {
     };
 
     const onRefresh = async () => {
-        setRefreshing(true); 
+        setRefreshing(true);
         const orderedData = await fetchOrderedProducts();
         setOrderedProducts(orderedData);
-        setRefreshing(false); 
+        setRefreshing(false);
     };
 
     useEffect(() => {
@@ -65,17 +65,23 @@ const Myorders = () => {
 
     return (
         <View style={OrderStyle.container}>
-        <FlatList
-            data={orderedProducts}
-            renderItem={renderItem}
-            keyExtractor={(item, index) => index.toString()} 
-            refreshControl={
-                <RefreshControl
-                    refreshing={refreshing}
-                    onRefresh={onRefresh}
+            {orderedProducts.length > 0 ? (
+                <FlatList
+                    data={orderedProducts}
+                    renderItem={renderItem}
+                    keyExtractor={(item, index) => index.toString()}
+                    refreshControl={
+                        <RefreshControl
+                            refreshing={refreshing}
+                            onRefresh={onRefresh}
+                        />
+                    }
                 />
-            }
-        />
+            ) : (
+                <View style={OrderStyle.emptyContainer}>
+                    <Text style={OrderStyle.emptyText}>You don't have any ordered</Text>
+                </View>
+            )}
         </View>
     );
 };

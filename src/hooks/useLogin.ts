@@ -3,17 +3,23 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Alert, DeviceEventEmitter } from 'react-native';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { AIP_URL } from '../api';
+import { NavigationProp, ParamListBase, useNavigation } from '@react-navigation/native';
 
 export type UserData = {
     Email: string;
     password: string;
 }
 
+type Props = {
+    navigate(arg0: string): unknown;
+    navigations: NavigationProp<ParamListBase>
+}
 
 export const useLoginLogic = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [userData, setUserData] = useState<UserData[] | null>(null);
     const { control, handleSubmit, formState: { errors }, reset } = useForm();
+    const navigation: Props = useNavigation();
 
     const fetchUserData = async () => {
         try {
@@ -64,9 +70,19 @@ export const useLoginLogic = () => {
         }
     };
 
+    const handleSignUp = () => {
+        navigation.navigate("Signup")
+    }
+
     useEffect(() => {
         fetchUserData();
     }, []);
 
-    return { control, handleSubmit, errors, handleLogin, isLoading };
+    return { 
+        control,
+        handleSubmit, 
+        errors, handleLogin, 
+        isLoading, 
+        handleSignUp 
+    };
 };

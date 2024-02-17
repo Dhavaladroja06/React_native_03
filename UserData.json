@@ -6,32 +6,196 @@
       "mobileNumber": "8254455155",
       "password": "aaaaaaaa",
       "id": 1,
-      "cart": [],
+      "cart": [
+        {
+          "id": 30,
+          "title": "Key Holder",
+          "description": "Attractive DesignMetallic materialFour key hooksReliable & DurablePremium Quality",
+          "price": 30,
+          "discountPercentage": 2.92,
+          "rating": 4.92,
+          "stock": 54,
+          "brand": "Golden",
+          "category": "home-decoration",
+          "thumbnail": "https://cdn.dummyjson.com/product-images/30/thumbnail.jpg",
+          "images": [
+            "https://cdn.dummyjson.com/product-images/30/1.jpg",
+            "https://cdn.dummyjson.com/product-images/30/2.jpg",
+            "https://cdn.dummyjson.com/product-images/30/3.jpg",
+            "https://cdn.dummyjson.com/product-images/30/thumbnail.jpg"
+          ],
+          "quantity": 1
+        }
+      ],
       "address": "Nikol - Naroda Road, Ahmedabad, Gujarat, 380038, India",
       "orders": [
         {
-          "date": "Thu Feb 15 2024",
-          "time": "7:32:14 PM",
+          "date": "Fri Feb 16 2024",
+          "time": "4:19:01 PM",
           "products": [
             {
-              "id": 13,
-              "title": "Fog Scent Xpressio Perfume",
-              "description": "Product details of Best Fog Scent Xpressio Perfume 100ml For Men cool long lasting perfumes for Men",
-              "price": 13,
-              "discountPercentage": 8.14,
-              "rating": 4.59,
-              "stock": 61,
-              "brand": "Fog Scent Xpressio",
-              "category": "fragrances",
-              "thumbnail": "https://cdn.dummyjson.com/product-images/13/thumbnail.webp",
+              "id": 2,
+              "title": "iPhone X",
+              "description": "SIM-Free, Model A19211 6.5-inch Super Retina HD display with OLED technology A12 Bionic chip with ...",
+              "price": 899,
+              "discountPercentage": 17.94,
+              "rating": 4.44,
+              "stock": 34,
+              "brand": "Apple",
+              "category": "smartphones",
+              "thumbnail": "https://cdn.dummyjson.com/product-images/2/thumbnail.jpg",
               "images": [
-                "https://cdn.dummyjson.com/product-images/13/1.jpg",
-                "https://cdn.dummyjson.com/product-images/13/2.png",
-                "https://cdn.dummyjson.com/product-images/13/3.jpg",
-                "https://cdn.dummyjson.com/product-images/13/4.jpg",
-                "https://cdn.dummyjson.com/product-images/13/thumbnail.webp"
+                "https://cdn.dummyjson.com/product-images/2/1.jpg",
+                "https://cdn.dummyjson.com/product-images/2/2.jpg",
+                "https://cdn.dummyjson.com/product-images/2/3.jpg",
+                "https://cdn.dummyjson.com/product-images/2/thumbnail.jpg"
               ],
-              "quantity": 6
+              "quantity": 1
+            },
+            {
+              "id": 4,
+              "title": "OPPOF19",
+              "description": "OPPO F19 is officially announced on April 2021.",
+              "price": 280,
+              "discountPercentage": 17.91,
+              "rating": 4.3,
+              "stock": 123,
+              "brand": "OPPO",
+              "category": "smartphones",
+              "thumbnail": "https://cdn.dummyjson.com/product-images/4/thumbnail.jpg",
+              "images": [
+                "https://cdn.dummyjson.com/product-images/4/1.jpg",
+                "https://cdn.dummyjson.com/product-images/4/2.jpg",
+                "https://cdn.dummyjson.com/product-images/4/3.jpg",
+                "https://cdn.dummyjson.com/product-images/4/4.jpg",
+                "https://cdn.dummyjson.com/product-images/4/thumbnail.jpg"
+              ],
+              "quantity": 1
+            },
+            {
+              "id": 6,
+              "title": "MacBook Pro",
+              "description": "MacBook Pro 2021 with mini-LED display may launch between September, November",
+              "price": 1749,
+              "discountPercentage": 11.02,
+              "rating": 4.57,
+              "stock": 83,
+              "brand": "Apple",
+              "category": "laptops",
+              "thumbnail": "https://cdn.dummyjson.com/product-images/6/thumbnail.png",
+              "images": [
+                "https://cdn.dummyjson.com/product-images/6/1.png",
+                "https://cdn.dummyjson.com/product-images/6/2.jpg",
+                "https://cdn.dummyjson.com/product-images/6/3.png",
+                "https://cdn.dummyjson.com/product-images/6/4.jpg"
+              ],
+              "quantity": 1
+            }
+          ]
+        },
+        {
+          "date": "Fri Feb 16 2024",
+          "time": "4:21:32 PM",
+          "products": [
+            {
+              "id": 2,
+              "title": "iPhone X",
+              "description": "SIM-Free, Model A19211 6.5-inch Super Retina HD display with OLED technology A12 Bionic chip with ...",
+              "price": 899,
+              "discountPercentage": 17.94,
+              "rating": 4.44,
+              "stock": 34,
+              "brand": "Apple",
+              "category": "smartphones",
+              "thumbnail": "https://cdn.dummyjson.com/product-images/2/thumbnail.jpg",
+              "images": [
+                "https://cdn.dummyjson.com/product-images/2/1.jpg",
+                "https://cdn.dummyjson.com/product-images/2/2.jpg",
+                "https://cdn.dummyjson.com/product-images/2/3.jpg",
+                "https://cdn.dummyjson.com/product-images/2/thumbnail.jpg"
+              ],
+              "quantity": 1
+            }
+          ]
+        },
+        {
+          "date": "Fri Feb 16 2024",
+          "time": "4:45:45 PM",
+          "products": [
+            {
+              "id": 5,
+              "title": "Huawei P30",
+              "description": "Huawei’s re-badged P30 Pro New Edition was officially unveiled yesterday in Germany and now the device has made its way to the UK.",
+              "price": 499,
+              "discountPercentage": 10.58,
+              "rating": 4.09,
+              "stock": 32,
+              "brand": "Huawei",
+              "category": "smartphones",
+              "thumbnail": "https://cdn.dummyjson.com/product-images/5/thumbnail.jpg",
+              "images": [
+                "https://cdn.dummyjson.com/product-images/5/1.jpg",
+                "https://cdn.dummyjson.com/product-images/5/2.jpg",
+                "https://cdn.dummyjson.com/product-images/5/3.jpg"
+              ],
+              "quantity": 1
+            },
+            {
+              "id": 10,
+              "title": "HP Pavilion 15-DK1056WM",
+              "description": "HP Pavilion 15-DK1056WM Gaming Laptop 10th Gen Core i5, 8GB, 256GB SSD, GTX 1650 4GB, Windows 10",
+              "price": 1099,
+              "discountPercentage": 6.18,
+              "rating": 4.43,
+              "stock": 89,
+              "brand": "HP Pavilion",
+              "category": "laptops",
+              "thumbnail": "https://cdn.dummyjson.com/product-images/10/thumbnail.jpeg",
+              "images": [
+                "https://cdn.dummyjson.com/product-images/10/1.jpg",
+                "https://cdn.dummyjson.com/product-images/10/2.jpg",
+                "https://cdn.dummyjson.com/product-images/10/3.jpg",
+                "https://cdn.dummyjson.com/product-images/10/thumbnail.jpeg"
+              ],
+              "quantity": 1
+            },
+            {
+              "id": 14,
+              "title": "Non-Alcoholic Concentrated Perfume Oil",
+              "description": "Original Al Munakh® by Mahal Al Musk | Our Impression of Climate | 6ml Non-Alcoholic Concentrated Perfume Oil",
+              "price": 120,
+              "discountPercentage": 15.6,
+              "rating": 4.21,
+              "stock": 114,
+              "brand": "Al Munakh",
+              "category": "fragrances",
+              "thumbnail": "https://cdn.dummyjson.com/product-images/14/thumbnail.jpg",
+              "images": [
+                "https://cdn.dummyjson.com/product-images/14/1.jpg",
+                "https://cdn.dummyjson.com/product-images/14/2.jpg",
+                "https://cdn.dummyjson.com/product-images/14/3.jpg",
+                "https://cdn.dummyjson.com/product-images/14/thumbnail.jpg"
+              ],
+              "quantity": 2
+            },
+            {
+              "id": 17,
+              "title": "Tree Oil 30ml",
+              "description": "Tea tree oil contains a number of compounds, including terpinen-4-ol, that have been shown to kill certain bacteria,",
+              "price": 12,
+              "discountPercentage": 4.09,
+              "rating": 4.52,
+              "stock": 78,
+              "brand": "Hemani Tea",
+              "category": "skincare",
+              "thumbnail": "https://cdn.dummyjson.com/product-images/17/thumbnail.jpg",
+              "images": [
+                "https://cdn.dummyjson.com/product-images/17/1.jpg",
+                "https://cdn.dummyjson.com/product-images/17/2.jpg",
+                "https://cdn.dummyjson.com/product-images/17/3.jpg",
+                "https://cdn.dummyjson.com/product-images/17/thumbnail.jpg"
+              ],
+              "quantity": 1
             }
           ]
         }

@@ -62,13 +62,13 @@ const useCart = () => {
             if (!userData) {
                 return;
             }
-
+    
             const { id } = JSON.parse(userData);
             const response = await fetch(`${AIP_URL}/${id}`);
             const userDataFromServer = await response.json();
             const userCart = userDataFromServer.cart || [];
             const updatedUserCart = userCart.map((product: { id: number; }) =>
-                product.id === productId ? { ...product, quantity: newQuantity } : product
+                product.id === productId ? { ...product, quantity: Math.min(newQuantity, 10) } : product
             );
             await fetch(`${AIP_URL}/${id}`, {
                 method: 'PUT',
@@ -79,7 +79,7 @@ const useCart = () => {
             });
             setCartProducts(prevCartProducts =>
                 prevCartProducts.map(product =>
-                    product.id === productId ? { ...product, quantity: newQuantity } : product
+                    product.id === productId ? { ...product, quantity: Math.min(newQuantity, 10) } : product
                 )
             );
         } catch (error) {
@@ -230,12 +230,15 @@ const useCart = () => {
     const handleBuyNow = async () => {
         try {
             const date = new Date();
-            const order = {
+            const orderDateTime = {
                 date: date.toDateString(),
                 time: date.toLocaleTimeString(),
+            };
+            const order = {
+                ...orderDateTime,
                 products: cartProducts
             };
-
+    
             const userData = await AsyncStorage.getItem('loggedInUserData');
             if (!userData) {
                 return;
@@ -244,8 +247,17 @@ const useCart = () => {
             const response = await fetch(`${AIP_URL}/${id}`);
             const userDataFromServer = await response.json();
             const orders = userDataFromServer.orders || [];
-            const updatedOrders = [...orders, order];
-
+            const existingOrderIndex = orders.findIndex((order: { date: string; time: string; }) => 
+                order.date === orderDateTime.date && order.time === orderDateTime.time
+            );
+    
+            let updatedOrders = [...orders];
+            if(existingOrderIndex !== -1) {
+                updatedOrders[existingOrderIndex].products.push(...order.products);
+            } else {
+                updatedOrders.push(order);
+            }
+    
             await fetch(`${AIP_URL}/${id}`, {
                 method: 'PUT',
                 headers: {
@@ -259,18 +271,22 @@ const useCart = () => {
             console.error('Error processing order:', error);
         }
     };
+
+
     const handlebillclose = () => {
         setShowBillModal(false)
     }
     
     useEffect(() => {
-        calculateTotalCount(); // Recalculate total count whenever cartProducts changes
+        calculateTotalCount(); 
     }, [cartProducts]);
 
     const calculateTotalCount = () => {
         const count = cartProducts.reduce((acc, product) => acc + product.quantity, 0);
         setTotalCount(count);
     };
+
+    
 
 
     return {

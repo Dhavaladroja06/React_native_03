@@ -14,5 +14,6 @@ export const Colors = {
     ripple_color: "#e2d84aff",
     Quantity_color: "#d7d7d79d",
     successBackground: '#4CAF50',
-    successText: '#FFFFFF'
+    successText: '#FFFFFF',
+    order_color:"#cdeaf5"
 }   

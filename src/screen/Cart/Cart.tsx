@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, Image, Pressable, RefreshControl, Modal, ActivityIndicator, Animated  } from 'react-native';
+import { View, Text, FlatList, Image, Pressable, RefreshControl, Modal, ActivityIndicator, Animated } from 'react-native';
 import { ProductProps } from '../../hooks/useHome';
 import { CartStyle } from './Cart.style';
 import { Colors } from '../../constants/Color';
@@ -17,14 +17,12 @@ const Cart = () => {
         showBillModal,
         totalBill,
         fetchCartData,
-        updateQuantity,
         incrementQuantity,
         decrementQuantity,
         removeProduct,
         handleProceedToBuy,
         handleMapPress,
         handleMapDone,
-        getLocationAddress,
         handleBuyNow,
         handlebillclose,
         isLoading,
@@ -42,7 +40,7 @@ const Cart = () => {
     const showSuccessMessage = () => {
         Animated.timing(successMessageOpacity, {
             toValue: 1,
-            duration: 1000,
+            duration: 2000,
             useNativeDriver: true,
         }).start(() => {
             setTimeout(() => {
@@ -51,13 +49,20 @@ const Cart = () => {
         });
     };
 
+
     const hideSuccessMessage = () => {
         Animated.timing(successMessageOpacity, {
             toValue: 0,
-            duration: 1000,
+            duration: 100,
             useNativeDriver: true,
         }).start();
     };
+
+    const handleclose = () => {
+        hideSuccessMessage();
+        handlebillclose()
+    };
+
 
     const renderCartProduct = ({ item }: { item: ProductProps }) => {
 
@@ -108,12 +113,18 @@ const Cart = () => {
 
     return (
         <View style={CartStyle.container}>
-            <FlatList
-                data={cartProducts}
-                renderItem={renderCartProduct}
-                keyExtractor={(item) => item.id.toString()}
-                refreshControl={<RefreshControl refreshing={refreshing} onRefresh={fetchCartData} />}
-            />
+            {cartProducts.length > 0 ? (
+                <FlatList
+                    data={cartProducts}
+                    renderItem={renderCartProduct}
+                    keyExtractor={(item) => item.id.toString()}
+                    refreshControl={<RefreshControl refreshing={refreshing} onRefresh={fetchCartData} />}
+                />
+            ) : (
+                <View style={CartStyle.emptyContainer}>
+                    <Text style={CartStyle.emptyText}>Your cart is empty</Text>
+                </View>
+            )}
 
             {cartProducts.length > 0 && (
                 <Pressable style={CartStyle.BuyButton} onPress={handleProceedToBuy} android_ripple={{ color: Colors.ripple_color }}>
@@ -148,7 +159,7 @@ const Cart = () => {
                             <Text style={CartStyle.billItemTitle}>{product.title}</Text>
                             <Text style={CartStyle.billItemtext}>{product.quantity}</Text>
                             <Text style={CartStyle.billItemtext}>{product.discountPercentage}%</Text>
-                            <Text style={CartStyle.billItemtext}>${product.price ? (product.price * product.quantity) .toFixed(2) : 0}</Text>
+                            <Text style={CartStyle.billItemtext}>${product.price ? (product.price * product.quantity).toFixed(2) : 0}</Text>
                         </View>
                     ))}
                     <View style={CartStyle.billTotal}>
@@ -159,7 +170,7 @@ const Cart = () => {
                         <Pressable style={CartStyle.modleBuyButton} onPress={handleBuyNow} android_ripple={{ color: Colors.ripple_color }}>
                             <Text style={CartStyle.closeButtonText}>BuyNow</Text>
                         </Pressable>
-                        <Pressable style={CartStyle.closeButton} onPress={handlebillclose}>
+                        <Pressable style={CartStyle.closeButton} onPress={handleclose}>
                             <Text style={CartStyle.closeButtonText}>Close</Text>
                         </Pressable>
                     </View>

@@ -3,7 +3,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import HomeBottomTab from "./BottomTab";
 import LoginStack from "./LoginStack";
-import { ActivityIndicator, DeviceEventEmitter, StyleSheet, TouchableOpacity } from "react-native";
+import { ActivityIndicator, Alert, DeviceEventEmitter, StyleSheet, TouchableOpacity } from "react-native";
 import { Colors } from "../constants/Color";
 import { Ionicons } from "@expo/vector-icons";
 
@@ -39,9 +39,27 @@ const MainNavigations = () => {
         };
     }, []);
 
+    
+
     const logout = async () => {
-        await AsyncStorage.removeItem("isLoggedIn");
-        setIsSignedIn(false);
+        Alert.alert(
+            "Logout",
+            "Are you sure you want to log out?",
+            [
+                {
+                    text: "Cancel",
+                    style: "cancel"
+                },
+                {
+                    text: "Logout",
+                    onPress: async () => {
+                        await AsyncStorage.removeItem("isLoggedIn");
+                        setIsSignedIn(false);
+                    }
+                }
+            ],
+            { cancelable: false }
+        );
     };
 
     if (isLoading) {
@@ -59,9 +77,17 @@ const MainNavigations = () => {
                         title:"ShopOnline",
                         headerRight: () => (
                             <TouchableOpacity onPress={logout} style={styles.logoutButton}>
-                                <Ionicons name="log-out-outline" size={24} color="black" />
+                                <Ionicons name="log-out-outline" size={24} color={Colors.white_color} />
                             </TouchableOpacity>
-                        )
+                        ),
+                        headerTintColor: Colors.white_color,
+                        headerTitleStyle:{
+                            fontSize: 26,
+                            fontWeight:"600"
+                        },
+                        headerStyle:{
+                            backgroundColor:Colors.Title_color
+                        }
                     }}
                 />
             ) : (

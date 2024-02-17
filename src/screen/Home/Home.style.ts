@@ -13,34 +13,31 @@ export const HomeStyle = StyleSheet.create({
     Maincontainer: {
         flex:1,
         backgroundColor: Colors.white_color,
-        padding: 10,
+        padding: 15,
         marginHorizontal: 5,
         marginBottom: 5,
         borderRadius: 10,
-        height: 165,
-        width:169,
-        // width:"100%",
+        height: 282,
+        // width:169,
+        width:"97%",
         elevation: 10,
-        shadowColor: Colors.Black_color,
-        shadowRadius: 5,
-        shadowOpacity: 2
     },
     thumbnail: {
         resizeMode: "cover",
-        height: 90,
+        height: 180,
         width: "100%",
         backgroundColor: Colors.Black_color
     },
     Title: {
-        fontSize: 14,
+        fontSize: 16,
         fontWeight: "800",
-        marginTop: 2
+        marginTop: 5
     },
     price: {
-        fontSize: 16,
+        fontSize: 18,
         fontWeight: "500",
         color: Colors.price_color,
-        marginTop: 2,
+        marginTop: 5,
         marginRight: 5
     },
     priceView:{
@@ -48,9 +45,9 @@ export const HomeStyle = StyleSheet.create({
     },
     discountPercentage:{
         color:Colors.white_color,
-        fontSize: 12,
+        fontSize: 14,
         fontWeight:"500",
-        marginTop: 3,
+        marginTop: 6,
         backgroundColor:Colors.red_color,
         padding: 2
     },
@@ -64,8 +61,8 @@ export const HomeStyle = StyleSheet.create({
         margin: 10,
     },
     flatlist:{ 
-        justifyContent:"space-between",
-        alignItems:"center",
+        justifyContent:"center",
+        // alignItems:"center",
         flex:1,
      }
 })

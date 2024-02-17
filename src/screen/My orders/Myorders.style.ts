@@ -20,18 +20,31 @@ export const OrderStyle = StyleSheet.create({
     },
     TitleView:{
         flexDirection:"row",
-        justifyContent:"space-between"
+        backgroundColor:Colors.order_color,
+        margin: 10,
+        padding:5,
+        borderRadius: 5,
+        elevation: 10,
+        justifyContent:"space-around"
     },
     title:{
         fontSize: 16,
         fontWeight:"400",
+        width: "50%"
     },
     quantity:{
-        borderWidth: 2,
-        borderColor:Colors.gray_color,
-        padding: 3,
-        borderRadius: 5,
-        backgroundColor:Colors.Quantity_color,
-        textAlign:"center"
-    }
+       fontSize:16,
+       fontWeight:"400",
+       width:"50%"
+    },
+    emptyContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    emptyText: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: Colors.mrp_color,
+    },
 })

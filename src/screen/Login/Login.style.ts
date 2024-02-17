@@ -28,7 +28,7 @@ export const LoginStyle = StyleSheet.create({
     },
     ButtomView: {
         flexDirection: "row",
-        marginTop: 15,
+        marginTop: 25,
         justifyContent: "center",
         marginBottom: 25
     },
